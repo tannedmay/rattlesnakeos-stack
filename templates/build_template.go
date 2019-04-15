@@ -497,6 +497,7 @@ aosp_repo_modifications() {
       print "  <remote name=\"github\" fetch=\"https://github.com/RattlesnakeOS/\" revision=\"" ANDROID_VERSION "\" />";
       print "  <remote name=\"fdroid\" fetch=\"https://gitlab.com/fdroid/\" />";
       print "  <remote name=\"prepare-vendor\" fetch=\"https://github.com/RattlesnakeOS/\" revision=\"master\" />";
+      print "  <remote name=\"stevesoltys-github\" fetch=\"https://github.com/stevesoltys/\" revision=\"master\" />";
       <% if .CustomManifestRemotes %>
       <% range $i, $r := .CustomManifestRemotes %>
       print "  <remote name=\"<% .Name %>\" fetch=\"<% .Fetch %>\" revision=\"<% .Revision %>\" />";
@@ -511,7 +512,9 @@ aosp_repo_modifications() {
       print "  <project path=\"packages/apps/Updater\" name=\"platform_packages_apps_Updater\" remote=\"github\" />";
       print "  <project path=\"packages/apps/F-Droid\" name=\"fdroidclient\" remote=\"fdroid\" revision=\"refs/tags/" FDROID_CLIENT_VERSION "\" />";
       print "  <project path=\"packages/apps/F-DroidPrivilegedExtension\" name=\"privileged-extension\" remote=\"fdroid\" revision=\"refs/tags/" FDROID_PRIV_EXT_VERSION "\" />";
+      print "  <project path=\"packages/apps/Backup\" name=\"backup\" remote=\"stevesoltys-github\" />";
       print "  <project path=\"vendor/android-prepare-vendor\" name=\"android-prepare-vendor\" remote=\"prepare-vendor\" />"}' .repo/manifest.xml
+
 
     # remove things from manifest
     sed -i '/chromium-webview/d' .repo/manifest.xml
@@ -714,6 +717,7 @@ patch_add_apps() {
   sed -i "\$aPRODUCT_PACKAGES += Updater" ${mk_file}
   sed -i "\$aPRODUCT_PACKAGES += F-DroidPrivilegedExtension" ${mk_file}
   sed -i "\$aPRODUCT_PACKAGES += F-Droid" ${mk_file}
+  sed -i "\$aPRODUCT_PACKAGES += Backup" ${mk_file}
   sed -i "\$aPRODUCT_PACKAGES += chromium" ${mk_file}
 
   # add any modules defined in custom manifest projects
